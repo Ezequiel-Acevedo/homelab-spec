@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  gluetun:
+    image: qmcgaw/gluetun:latest
+    container_name: gluetun
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    ports:
+      # We map qBittorrent's web UI port here on the VPN container
+      - "8080:8080/tcp" 
+      # We also map your AirVPN forwarded port here
+      - "31562:31562/tcp"
+      - "31562:31562/udp"
+    environment:
+      - VPN_SERVICE_PROVIDER=airvpn
+      - VPN_TYPE=wireguard
+      - WIREGUARD_PRIVATE_KEY=8FUbv3YjuK836IqmYXaYpiQo6nLFFn3AljJ4fEaiH3U=
+      - WIREGUARD_PRESHARED_KEY=sjZpPm6E3610VwwfGn6CMq8A6z1H5edZPSRINYO1Zbs=
+      - WIREGUARD_ADDRESSES=10.168.7.44/32,fd7d:76ee:e68f:a993:5af4:310a:f43c:72cb/128
+      - SERVER_COUNTRIES=United-States # Change this to your preferred AirVPN country
+      - FIREWALL_VPN_INPUT_PORTS=31562
+      - TZ=America/Los_Angeles
+    restart: unless-stopped
