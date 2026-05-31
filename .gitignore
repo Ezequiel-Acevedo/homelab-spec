@@ -1,0 +1,13 @@
+# Ignore Environment Variables (Secrets)
+.env
+*.env
+
+# Ignore WireGuard Keys
+*.key
+*.conf
+
+# Ignore Docker persistent data/volumes
+*/data/
+*/config/
+*/work/
+*/logs/
