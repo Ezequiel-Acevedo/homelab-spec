@@ -97,15 +97,16 @@ services:
       - "6767:6767/tcp"
     restart: unless-stopped
 
-  jellyseerr:
-    image: fallenbagel/jellyseerr:latest
-    container_name: jellyseerr
+  seerr:
+    image: ghcr.io/seerr-team/seerr:latest
+    container_name: seerr
+    init: true
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=America/Los_Angeles
     volumes:
-      - ./config/jellyseerr:/config
+      - ./config/seerr:/app/config
     ports:
       - "5055:5055/tcp"
     restart: unless-stopped
