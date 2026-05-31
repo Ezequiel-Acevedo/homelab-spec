@@ -19,8 +19,8 @@ services:
       - VPN_TYPE=wireguard
       - WIREGUARD_PRIVATE_KEY=8FUbv3YjuK836IqmYXaYpiQo6nLFFn3AljJ4fEaiH3U=
       - WIREGUARD_PRESHARED_KEY=sjZpPm6E3610VwwfGn6CMq8A6z1H5edZPSRINYO1Zbs=
-      - WIREGUARD_ADDRESSES=10.168.7.44/32,fd7d:76ee:e68f:a993:5af4:310a:f43c:72cb/128
-      - SERVER_COUNTRIES=United-States # Change this to your preferred AirVPN country
+      - WIREGUARD_ADDRESSES=10.168.7.44/32
+      - SERVER_COUNTRIES=United States # Change this to your preferred AirVPN country
       - FIREWALL_VPN_INPUT_PORTS=31562
       - TZ=America/Los_Angeles
     restart: unless-stopped
