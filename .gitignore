@@ -11,3 +11,11 @@
 */config/
 */work/
 */logs/
+
+# Ignore massive media binaries
+media/
+
+# Ignore Docker state/cache files we don't want tracked
+*/config/*/logs/
+*/config/radarr/MediaCover/
+*/config/sonarr/MediaCover/

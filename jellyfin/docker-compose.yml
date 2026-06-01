@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   jellyfin:
     image: lscr.io/linuxserver/jellyfin:latest
@@ -11,8 +9,15 @@ services:
     volumes:
       - ./config:/config
       - ../media:/data/media
+      # ADDED: Explicitly maps transcoding to the physical disk to prevent RAM exhaustion
+      - ../media/transcodes:/config/transcodes 
     ports:
       - "8096:8096/tcp"
     devices:
       - /dev/dri:/dev/dri
+    # ADDED: Tells the host OS to never kill this container, even if RAM hits 99%
+    oom_score_adj: -500 
+    # ADDED: Hard ceiling of 1.5GB RAM, soft baseline of 512MB
+    mem_limit: 1.5g
+    mem_reservation: 512m
     restart: unless-stopped
