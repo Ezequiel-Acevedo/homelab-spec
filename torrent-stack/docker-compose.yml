@@ -14,6 +14,7 @@ services:
       # We also map your AirVPN forwarded port here
       - "31562:31562/tcp"
       - "31562:31562/udp"
+      - "8888:8888/tcp" # ADDED: The Internal HTTP Proxy Port
     environment:
       - VPN_SERVICE_PROVIDER=airvpn
       - VPN_TYPE=wireguard
@@ -22,6 +23,7 @@ services:
       - WIREGUARD_ADDRESSES=10.168.7.44/32
       - SERVER_COUNTRIES=United States # Change this to your preferred AirVPN country
       - FIREWALL_VPN_INPUT_PORTS=31562
+      - HTTPPROXY=on # ADDED: Turns on the proxy engine
       - TZ=America/Los_Angeles
     restart: unless-stopped
 
@@ -53,6 +55,16 @@ services:
       - ./config/prowlarr:/config
     ports:
       - "9696:9696/tcp"
+    restart: unless-stopped
+
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: flaresolverr
+    environment:
+      - LOG_LEVEL=info
+      - TZ=America/Los_Angeles
+    ports:
+      - "8191:8191/tcp"
     restart: unless-stopped
 
   radarr:
@@ -109,4 +121,14 @@ services:
       - ./config/seerr:/app/config
     ports:
       - "5055:5055/tcp"
+    restart: unless-stopped
+
+  recyclarr:
+    image: ghcr.io/recyclarr/recyclarr:latest
+    container_name: recyclarr
+    user: 1000:1000
+    environment:
+      - TZ=America/Los_Angeles
+    volumes:
+      - ./config/recyclarr:/config
     restart: unless-stopped
